@@ -21,11 +21,14 @@ class DirectiveTreeGenerator
 
     public function __construct($rootType = Directive::TYPE_CONTAINER, $name = NULL, $value = NULL)
     {
-        $this->directiveStack[] = new Directive($rootType, 0, $name, $value);
+        //$this->directiveStack[] = new Directive($rootType, 0, $name, $value);
     }
 
     public function feedLine($stringLine)
     {
+        if(!trim($stringLine)) {
+            return NULL;
+        }
         switch ($this->getLineType($stringLine)) {
             case self::TYPE_NESTED_END:
                 array_pop($this->directiveStack);
@@ -33,7 +36,9 @@ class DirectiveTreeGenerator
             case self::TYPE_NESTED_START:
                 $topDirective = $this->deepestDirective();
                 $newDirective = $this->getDirectiveForLine($stringLine);
-                $topDirective->addChildDirective($newDirective);
+                if($topDirective) {
+                    $topDirective->addChildDirective($newDirective);
+                }
                 $this->directiveStack[] = $newDirective;
                 break;
             default:
@@ -73,7 +78,10 @@ class DirectiveTreeGenerator
      */
     public function deepestDirective()
     {
-        return $this->directiveStack[count($this->directiveStack) - 1];
+        if(isset($this->directiveStack[count($this->directiveStack) - 1])) {
+            return $this->directiveStack[count($this->directiveStack) - 1];
+        }
+        return NULL;
     }
 
     /**
@@ -117,14 +125,6 @@ class DirectiveTreeGenerator
      */
     public function getRootDirective()
     {
-        return $this->rootDirective;
-    }
-
-    /**
-     * @param Directive $rootDirective
-     */
-    public function setRootDirective($rootDirective)
-    {
-        $this->rootDirective = $rootDirective;
+        return $this->directiveStack[0];
     }
 } 

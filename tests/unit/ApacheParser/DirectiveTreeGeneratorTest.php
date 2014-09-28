@@ -149,4 +149,23 @@ class DirectiveTreeGeneratorTest extends TestCase
         $this->assertEquals(DirectiveTreeGenerator::TYPE_NESTED_END, $generator->getLineType(' </foo>'));
     }
 
+    /**
+     * @test
+     */
+    public function from_source()
+    {
+        $expected = <<<HERE
+<foo *:80>
+</foo>
+
+HERE;
+        $lines = explode(PHP_EOL, $expected);
+        $generator = new DirectiveTreeGenerator();
+        foreach($lines as $line) {
+            $generator->feedLine($line);
+        }
+        print_r($generator);
+        var_dump($expected, (string)$generator);
+        $this->assertEquals($expected, (string)$generator);
+    }
 }

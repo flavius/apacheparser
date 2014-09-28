@@ -58,10 +58,41 @@ class Directive
      */
     public function addChildDirective(Directive $childDirective)
     {
-        $this->childDirectives[] = $childDirective;
-        if($this->getType() == self::TYPE_NESTED) {
-            $childDirective->setLevel($this->getLevel() + 1);
+        if ($this->isNestingType()) {
+            $this->childDirectives[] = $childDirective;
+            if ($this->getType() == self::TYPE_NESTED) {
+                $childDirective->setLevel($this->getLevel() + 1);
+            } else {
+                //$childDirective->setLevel($this->getLevel());
+            }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNestingType()
+    {
+        return in_array($this->type, [self::TYPE_NESTED, self::TYPE_CONTAINER]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        if (!in_array($type, [self::TYPE_SIMPLE, self::TYPE_DOUBLE, self::TYPE_COMMENT, self::TYPE_NESTED, self::TYPE_CONTAINER])) {
+            throw new \RuntimeException('Not a valid type');
+        }
+        $this->type = $type;
     }
 
     /**
@@ -121,25 +152,6 @@ class Directive
     }
 
     /**
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param int $type
-     */
-    public function setType($type)
-    {
-        if (!in_array($type, [self::TYPE_SIMPLE, self::TYPE_DOUBLE, self::TYPE_COMMENT, self::TYPE_NESTED, self::TYPE_CONTAINER])) {
-            throw new \RuntimeException('Not a valid type');
-        }
-        $this->type = $type;
-    }
-
-    /**
      * @return string
      */
     public function getName()
@@ -184,8 +196,8 @@ class Directive
      */
     public function setChildDirectives(array $childDirectives)
     {
-        if (in_array($this->type, [self::TYPE_NESTED, self::TYPE_CONTAINER])) {
-            if(is_array($childDirectives)) {
+        if ($this->isNestingType()) {
+            if (is_array($childDirectives)) {
                 foreach ($childDirectives as $child) {
                     $this->addChildDirective($child);
                 }
