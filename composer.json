@@ -1,0 +1,20 @@
+{
+    "autoload": {
+        "psr-4": {
+            "ApacheParser\\": "src/ApacheParser/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Testunit\\": "tests/tools/Testunit/",
+            "ApacheParser\\": [ "src/ApacheParser/", "tests/doubles/ApacheParser/" ]
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*",
+        "phpunit/php-invoker": "*"
+    },
+    "require": {
+
+    }
+}
