@@ -78,7 +78,7 @@ HERE;
 
         $fooDirective = new Directive(Directive::TYPE_SIMPLE, 0, 'foo');
         $helloWorldDirective = new Directive(Directive::TYPE_DOUBLE, 0, 'hello', 'world');
-        $container = new Directive(Directive::TYPE_CONTAINER, 0, NULL, NULL, [$fooDirective, $helloWorldDirective]);
+        $container = new Directive(Directive::TYPE_CONTAINER, 0, NULL, NULL, array($fooDirective, $helloWorldDirective));
 
         $this->assertEquals($expected, (string)$container);
     }
@@ -96,7 +96,7 @@ HERE;
 
         $fooDirective = new Directive(Directive::TYPE_SIMPLE, 0, 'foo');
         $helloWorldDirective = new Directive(Directive::TYPE_DOUBLE, 0, 'hello', 'world');
-        $container = new Directive(Directive::TYPE_CONTAINER, 1, NULL, NULL, [$fooDirective, $helloWorldDirective]);
+        $container = new Directive(Directive::TYPE_CONTAINER, 1, NULL, NULL, array($fooDirective, $helloWorldDirective));
 
         $this->assertEquals($expected, (string)$container);
     }
@@ -114,7 +114,7 @@ HERE;
 
         $fooDirective = new Directive(Directive::TYPE_SIMPLE, 0, 'foo');
         $helloWorldDirective = new Directive(Directive::TYPE_DOUBLE, 1, 'hello', 'world');
-        $container = new Directive(Directive::TYPE_CONTAINER, 1, NULL, NULL, [$fooDirective, $helloWorldDirective]);
+        $container = new Directive(Directive::TYPE_CONTAINER, 1, NULL, NULL, array($fooDirective, $helloWorldDirective));
 
         $this->assertEquals($expected, (string)$container);
     }
@@ -173,7 +173,7 @@ HERE;
 
 HERE;
         $commentDirective = new Directive(Directive::TYPE_COMMENT, 0, NULL, 'TO DO');
-        $fooDirective = new Directive(Directive::TYPE_NESTED, 0, 'foo', NULL, [$commentDirective]);
+        $fooDirective = new Directive(Directive::TYPE_NESTED, 0, 'foo', NULL, array($commentDirective));
         $this->assertEquals($expected, (string)$fooDirective);
     }
 }
