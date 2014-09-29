@@ -7,8 +7,7 @@
 
 namespace ApacheParser;
 
-
-use Symfony\Component\Yaml\Exception\RuntimeException;
+use \RuntimeException;
 
 class DirectiveTreeGenerator
 {
