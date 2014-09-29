@@ -164,8 +164,6 @@ HERE;
         foreach($lines as $line) {
             $generator->feedLine($line);
         }
-        print_r($generator);
-        var_dump($expected, (string)$generator);
         $this->assertEquals($expected, (string)$generator);
     }
 }

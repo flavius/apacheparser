@@ -30,7 +30,9 @@ class DirectiveTreeGenerator
         }
         switch ($this->getLineType($stringLine)) {
             case self::TYPE_NESTED_END:
-                array_pop($this->directiveStack);
+                if(count($this->directiveStack) > 1) {
+                    array_pop($this->directiveStack);
+                }
                 break;
             case self::TYPE_NESTED_START:
                 $topDirective = $this->deepestDirective();
