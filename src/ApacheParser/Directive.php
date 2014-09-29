@@ -63,7 +63,7 @@ class Directive
             if ($this->getType() == self::TYPE_NESTED) {
                 $childDirective->setLevel($this->getLevel() + 1);
             } else {
-                //$childDirective->setLevel($this->getLevel());
+                $childDirective->setLevel($this->getLevel());
             }
         }
     }

@@ -152,6 +152,23 @@ class DirectiveTreeGeneratorTest extends TestCase
     /**
      * @test
      */
+    public function from_source_linear()
+    {
+        $expected = <<<HERE
+Hello world
+
+HERE;
+        $lines = explode(PHP_EOL, $expected);
+        $generator = new DirectiveTreeGenerator();
+        foreach($lines as $line) {
+            $generator->feedLine($line);
+        }
+        #print_r($generator);
+        $this->assertEquals($expected, (string)$generator);
+    }
+    /**
+     * @test
+     */
     public function from_source()
     {
         $expected = <<<HERE
@@ -172,7 +189,7 @@ HERE;
      */
     public function from_source_with_linear_start()
     {
-        $expected = <<<HERE
+        $factory = <<<HERE
 Hello world
 
 <foo *:80>
@@ -180,12 +197,18 @@ Hello world
 </foo>
 
 HERE;
-        $lines = explode(PHP_EOL, $expected);
+        $expected = <<<HERE
+Hello world
+<foo *:80>
+    Out There
+</foo>
+
+HERE;
+        $lines = explode(PHP_EOL, $factory);
         $generator = new DirectiveTreeGenerator();
         foreach($lines as $line) {
             $generator->feedLine($line);
         }
-        #print_r($generator);
         $this->assertEquals($expected, (string)$generator);
     }
 }
