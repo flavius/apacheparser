@@ -166,4 +166,26 @@ HERE;
         }
         $this->assertEquals($expected, (string)$generator);
     }
+
+    /**
+     * @test
+     */
+    public function from_source_with_linear_start()
+    {
+        $expected = <<<HERE
+Hello world
+
+<foo *:80>
+    Out There
+</foo>
+
+HERE;
+        $lines = explode(PHP_EOL, $expected);
+        $generator = new DirectiveTreeGenerator();
+        foreach($lines as $line) {
+            $generator->feedLine($line);
+        }
+        #print_r($generator);
+        $this->assertEquals($expected, (string)$generator);
+    }
 }

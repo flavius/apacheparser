@@ -44,6 +44,11 @@ class DirectiveTreeGenerator
                 break;
             default:
                 $topDirective = $this->deepestDirective();
+                if(NULL == $topDirective) {
+                    $topDirective = new Directive(Directive::TYPE_CONTAINER, 0);
+                    $topDirective->setLevel(0);
+                    $this->directiveStack[] = $topDirective;
+                }
                 $newDirective = $this->getDirectiveForLine($stringLine);
                 $topDirective->addChildDirective($newDirective);
                 break;
